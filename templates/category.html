@@ -1,0 +1,35 @@
+{% extends "common.html" %}
+{% block title %}
+    Categories: {{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="pt-md-5 pt-0" id='categories' style='background-image: url("{{url_for('static',filename='images/112.jpg')}}");background-position: center; background-size: cover; background-repeat: no-repeat' >
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-dark">
+    <button type="button" class="close" data-dismiss="alert"> &times; </button> {{ message }} </div>
+{% endfor %}
+
+    {# {% if categories %} #}
+    <div class="col-md-12 content">
+        <div class="header d-flex justify-content-center">
+            <h1 class="display-4 mb-5 py-2 px-2 text-center" style='width:auto;color: black;font-size: 3em;'>Categories</h1>
+        </div>
+        <div class="masonry">
+            {% for category in categories %}
+            <a href='/category/{{category.get("category")}}'>
+                <div class="item">
+                    <img src="data:image/jpg;base64,{{category.get('image')}}" alt="{{category.get('category')}}" class="image" style="width:100%;">
+                    <div class="middle">
+                        <div class="text" style="font-size: 1.5em">{{category.get('category')}}</div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {# {% endif %} #}
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "common.html" %}
+
+{% block title %}
+    {{super()}}
+{% endblock %}
+
+{% block content %}
+    <div class="container settings text-center mt-5">
+        <div class="username-s settings-item my-3 mx-0 ">
+            <h2 class="d-sm-inline-block" style='text-decoration: underline;'>Username</h2><a class='ml-1 font-weight-light' href='javascript:Edit({ele: ".username-s p", fieldType: "username",imgID : null, username : "{{userData.get("username")}}", placeholder:"Write New Username"})'>[Change Username]</a>
+            <p class="my-3">{{userData.get('username')}}</p>
+        </div>
+
+        <div class="about-s settings-item my-3 mx-0">
+            <h2 class="d-sm-inline-block" style='text-decoration: underline;'>About</h2><a class='ml-1 font-weight-light' href='javascript:Edit({ele: ".about-s p", fieldType: "about", placeholder:"Write Something about Yourself"})'>[Edit]</a>
+            {% if userData.get('about','') == "" %}
+            <p class="my-3"></p>
+            {% else %}
+            <p class="my-3">{{userData.get('about')}}</p>
+            {% endif %}
+        </div>
+
+        <!-- <div class="gender-s settings-item my-3 mx-0">
+            <h2 class="d-sm-inline-block" style='text-decoration: underline;'>Gender</h2><a class='ml-1 font-weight-light' href=>[Change Gender]</a>
+            <p class="my-3">{{userData.get('gender')}}</p>
+        </div> -->
+
+        <div class="password-s settings-item my-3 mx-0">
+            <h2 class="d-sm-inline-block" style='text-decoration: underline;'>Password</h2><a class='ml-1 font-weight-light' href='javascript:Edit({ele: ".password-s p", fieldType: "password", placeholder:"Change Password", type: "password"})'>[Change Password]</a>
+            <p class="mb-3 d-flex justify-content-center"></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var imgID = null;
+        var username = "{{userData.get("username")}}";
+        var active = false;
+    </script>
+    {{super()}}
+{% endblock %}

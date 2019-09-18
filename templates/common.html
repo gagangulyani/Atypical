@@ -1,0 +1,158 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block styles %}
+
+    {{super()}}
+    
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/animate.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/croppie.css')}}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/labs.css')}}"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/masonry.css')}}"> -->
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/styles.css')}}">
+
+    <link rel="icon" href="{{url_for('static', filename='images/Logo_Transparent.png')}}" type="image/png">
+
+    {% endblock %}
+
+    {% block title %}Atypical{% endblock %}
+</head>
+
+<body>
+    
+    {% block navbar%}
+    <div id="myOverlay"></div>
+    <div id="loadingGIF" class="row text-center align-items-center">
+        <img class="align-self-center"src="{{url_for('static',filename='images/loading.gif')}}" />
+        <p class="font-weight-bold align-self-center" style='color:white;'>Loading..</p>
+    </div>
+    <div>
+      
+    <nav class="navbar navbar-expand-xl navbar-light bg-custom">
+      <!-- Brand -->
+      <div class="container">
+        <a class="navbar-brand" href="{{url_for('index')}}">
+          <img src="{{url_for('static',filename='images/Logo_Transparent.png')}}" alt="Logo" style="width:150px;" title="Atypical">
+        </a>
+  
+        <div class="d-flex justify-content-between">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#search_" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle Search">
+              <span class="fa fa-search"></span>
+          </button>
+        </div>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link text-center" id="home" href="{{url_for('index')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-center" id="about" href="{{url_for('about')}}">About</a>
+            </li>
+
+            {% if session.get('_cu') != None %}
+            <li class="nav-item">
+              <a class="nav-link text-center" id="profile" 
+              href="{{url_for('profile') + getCUserData()['username']}}">Profile</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-center" id="settings" 
+              href="{{url_for('settings')}}">Settings</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-center" id="Upload" href="{{url_for('upload')}}">Upload</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-center" id="logout" href="{{url_for('logout')}}">Logout</a>
+            </li>
+            {% else %}
+                <li class="nav-item">
+                  <a class="nav-link text-center" id="signup" href="{{url_for('signup')}}">Signup</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-center" id="login" href="{{url_for('login')}}">Login</a>
+                </li>
+            {% endif %}
+          </ul>
+
+        </div>
+        <div class="collapse navbar-collapse" id="search_">
+            <ul class="navbar-nav d-flex mb-3 mb-lg-4">
+                <li id='formSearch'>
+                  <form class="form-inline nav-link" action='/search'>
+                      <input class="form-control" type="search" placeholder="Search Something" aria-label="Search" name="q"><button class="btn btn-outline-dark my-2 my-sm-0 ml-lg-1" type="submit">Search</button>
+                  </form>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+  
+{% if categories|length != 0 %}
+  <div class="scrollmenu sticky-top justify-content-xl-around justify-content-start d-flex">
+      <a href="/categories" class="cat">Categories</a>
+      <a href="/category/Top Rated" >Top Rated</a>
+      <a href="/category/Most Downloaded" >Most Downloaded</a>
+      {% for category in categories %}
+      <a href='/category/{{category.get('category')}}'>{{category.get('category')}}</a>
+      {% endfor %}
+  </div>
+{% endif %}
+
+{% for message in get_flashed_messages() %} 
+    <div class= "alert alert-dark">
+        <button type= "button" class= "close" data-dismiss= "alert" > &times; </button> {{ message }} 
+    </div> 
+{% endfor %}
+    {% endblock %}
+    {% block page_content %}
+    {%endblock%}
+    {% block scripts %}
+      {{super()}}
+      <script>
+        var path = "{{request.path}}";
+        current_path = path.split('/')[1]
+
+        if (current_path == '')
+          document.getElementById('home').classList.add('active');
+        else if (document.getElementById(current_path))
+            document.getElementById(current_path).classList.add('active');
+/*        if (document.addEventListener) { // IE >= 9; other browsers
+        document.addEventListener('contextmenu', function(e) {
+            alert("You've tried to open context menu"); //here you draw your own menu
+            e.preventDefault();
+            }, false);
+        } else { // IE < 9
+            document.attachEvent('oncontextmenu', function() {
+                alert("You've tried to open context menu");
+                window.event.returnValue = false;
+            });
+        }
+*/
+      </script>
+      <!-- <script src = "{{url_for('static', filename = 'js/jquery-3.4.1.js')}}"></script> -->
+      <script src = "{{url_for('static', filename = 'js/moment-with-locales.js')}}"></script>
+      <!-- <script src = "{{url_for('static', filename = 'js/isotope.pkgd.min.js')}}"></script> -->
+      <script src = "{{url_for('static', filename = 'js/croppie.js')}}"></script>
+      <!-- <script src = "{{url_for('static', filename = 'js/masonry.js')}}"></script> -->
+      <script src = "{{url_for('static', filename = 'js/script.js')}}"></script>
+      {{ moment.include_moment() }}
+    {% endblock %}
+</body>
+</html>

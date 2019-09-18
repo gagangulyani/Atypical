@@ -1,0 +1,55 @@
+{% extends "common.html" %}
+{% block title %}
+Categories: {{super()}}
+{% endblock %}
+{% block content %}
+<div class="pt-md-5 pt-0" id='categories'>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-dark">
+        <button type="button" class="close" data-dismiss="alert"> &times; </button> {{ message }} </div>
+    {% endfor %}
+    {# {% if categories %} #}
+    <div class="col-md-12 content">
+        <div class="header d-flex justify-content-center">
+            <h1 class="display-5 mb-5 py-2 px-2 text-center" style='width:auto;color: black; background: none;font-size: 3em;'><span style="border-bottom: 5px solid rgb(200,0,0); padding-bottom: : 0;">Category</span> : {{category}}</h1>
+        </div>
+        <div class="masonry">
+
+        </div>
+
+        <p id='fin' class="d-none text-center">Content Loaded</p>
+        <div class='d-flex justify-content-center' id='loadingImgs'>
+            <img src="{{url_for('static', filename = 'images/loadingImgs.gif')}}" alt="Loading More Images.." width="25%">
+        </div>
+        
+    </div>
+    {# {% endif %} #}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script>
+    var finished = false;
+    var loading_ = false;
+    var skip = 0;
+    var lastskip = 0;
+
+    if (skip == 0){
+        loadImages({cat : '{{category}}'});
+        console.log('loading_ for first time');
+    }
+    $(document).ready(function(){ 
+        $(document).scroll(function(e){
+            if($(window).scrollTop() + $(window).height() > $(document).height() - 200 && !(loading_) ){
+                if (!(finished) && !(loading_) && skip != lastskip){
+                    console.log('calling loadImages, \n current skip :' + skip);
+                    lastskip = skip;
+                    loadImages({skip : skip, cat : '{{category}}'});
+                }
+            }
+        });
+
+    });  
+</script>
+{% endblock %}

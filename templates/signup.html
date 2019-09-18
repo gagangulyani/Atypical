@@ -1,0 +1,31 @@
+{% extends "common.html" %}
+
+{% block content %}
+    <div class="background-cover" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{url_for('static',filename='images/Signup/bnw6.jpg')}}") id='signUp'>
+        
+        <div class="container center-everything">
+            <form class = "fadeInDown animated FormS" method="POST" autocomplete="on">
+                {{form.hidden_tag()}}
+                {% for field in form %}
+                    {% if field.type != 'CSRFTokenField' and field.type!='SubmitField' %}
+                        <div class="form-group">
+                           {{ field.label(style='background-color:black;color:white;padding:0.2em') }}
+                           {{ field(class='form-control') }}
+                        </div>
+                        {% for error in field.errors %}
+                            <div class="invalid mt-0 mb-3"> {{ error }} </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {{ form.submit(class='form-control btn btn-dark')}}
+
+                <div class="border-top pt-3">
+                    <small class="legend">
+                        <b>Already Have An Account? Click <a href="{{ url_for('login') }}">Here</a> to Login.</b>
+                    </small>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

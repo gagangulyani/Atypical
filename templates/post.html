@@ -1,0 +1,95 @@
+{% extends "common.html" %}
+{% block title %}
+Image By {{ImgData.get('name')|title}} - {{super()}}
+{% endblock %}
+{% block content %}
+<div id='ImgPost' class="">
+    <div class="row p-1 m-1 mt-5">
+        <div class="imgDisplay col-12 col-md-6">
+            <div class="imageDcontainer">
+                <a href="/images/{{ImgData.get('img_id')}}.jpg">
+                    <img class='imageD' src="data:image/jpeg;base64,{{ImgData.get('image')}}" alt="">
+                    <p class="text overlayD">Click On Image to Download</p>
+                </a>
+            </div>
+
+            <div class="description mx-5 mt-lg-5 mt-3">
+                <h3 class="font-weight-bold d-inline-block">Categories</h3>
+                <div class="post-description">
+                    {% for category in ImgData.get('categories') %}
+                        <a href="/category/{{category}}"><p>{{category}}</p></a>
+                    {% endfor %}
+                </div>
+                <hr>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-6 p-2">
+            <fieldset class="scheduler-border mt-3 mt-lg-0">
+                <legend class="scheduler-border font-weight-bold">Image Taken By</legend>
+                <div class="mb-3">
+                    <div class="align-content-center d-flex mt-2 justify-content-center proLink" onclick="ClickToGoTo('/profile/{{getUserData(ImgData.get('userID')).get('username')}}', this)">
+                        <img src="data:image/jpeg;base64,{{ImgData.get('profilePicture')}}" class="mini-profile-picture" alt="">
+                        <p class="user-name font-weight-bold mt-4 ml-lg-3">{{ImgData.get('name')|title}}</p>
+                    </div>
+                    <div class="vote text-center m-3">
+                        {% if upvoted %}
+                        <i title="Upvote" data-toggle="tooltip" class="fa fa-arrow-up p-1 activeUVote" onclick="vote('{{ImgData.get('img_id')}}')"></i>
+                        {%else%}
+                        <i title="Upvote" data-toggle="tooltip" class="fa fa-arrow-up p-1" onclick="vote('{{ImgData.get('img_id')}}')"></i>
+                        {% endif %}
+                        {% if downvoted %}
+                        <i title="Downvote" data-toggle="tooltip" class="fa fa-arrow-down p-1 activeDVote" onclick="vote('{{ImgData.get('img_id')}}', downvote=true)"></i>
+                        {% else %}
+                        <i title="Downvote" data-toggle="tooltip" class="fa fa-arrow-down p-1" onclick="vote('{{ImgData.get('img_id')}}', downvote=true)"></i>
+                        {% endif%}
+                        <p class="mt-1">Upvotes: <b class="font-weight-bold">{{ImgData.get('upvotes')|length - ImgData.get('downvotes')|length}}</b></p>
+                    </div>
+                    <hr>
+                    <div class="description mx-5">
+                        <h3 class="font-weight-bold d-inline-block">Description</h3>
+                        {% if current_usr.get('_id') == ImgData.get('userID') %}
+                        <span class="font-weight-light"><a href="javascript:Edit({ele:'#desc', isImg: true, fieldType: null})">[Edit]</a></span>
+                        {% endif %}
+                        <div class="post-description">
+                            <p id='desc'>{{ImgData.get('description','Unavailable')}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="description mx-5">
+                        <h3 class="font-weight-bold d-flex justify-content-end">Hashtags</h3>
+                        <div class="post-description d-flex justify-content-end">
+                            {% for hashtag in ImgData.get('tags') %}
+                            #{{hashtag}}&nbsp;
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="description mx-5">
+                        <h3 class="font-weight-bold">Upload Date</h3>
+                        <div class="post-description">
+                            <p class="mb-0">{{moment(ImgData.get('created_at')).format("dddd, MMMM Do YYYY, h:mma")}}</p>
+                            <p class="mt-0" style='font-size:0.7em;'>({{moment(ImgData.get('created_at')).fromNow()}})</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="description mx-5">
+                        <h3 class="font-weight-bold d-flex justify-content-center">Total Downloads</h3>
+                        <div class="post-description d-flex justify-content-center">
+                            <p class="mt-0 font-weight-bold" style=''>{{ImgData.get('totalDownloads')|int}}</p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var imgID = '{{ImgData.get("img_id")}}';
+        var username = null;
+    </script>
+    {{super()}}
+{% endblock %}

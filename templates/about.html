@@ -1,0 +1,13 @@
+{% extends "common.html" %}
+
+{% block content %}    
+    <div class="text-center mt-4 about" id = "about">
+        <div class="d-flex justify-content-center">
+            <img width="30%" src="{{url_for('static', filename = 'images/Logo.png')}}" alt="">
+        </div>
+
+        <div class="container lead">
+            <p>It is a <b>Stock Image Site</b> for finding all kinds of images.</p>
+        </div>
+    </div>
+{% endblock %}
