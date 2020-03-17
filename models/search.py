@@ -1,11 +1,12 @@
 from models.database import Database
-import nltk
+from json import load
 import requests
 
 def Hashtags(fileObj):
     # Everypixel API
-    client_id = 'CLIENT ID'
-    client_secret = 'CLIENT SECRET'
+    cred = load(open('models/config_api.json'))
+    client_id = cred.get('ClientID') # CLIENT ID
+    client_secret = cred.get('Secret') # CLIENT SECRET
     finalKeywords = []
     data = {'data': fileObj, 'num_keywords': 20}
 

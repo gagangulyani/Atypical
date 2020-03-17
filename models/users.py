@@ -3,7 +3,7 @@ from models.images import Image
 from models.categories import Category
 from models.encryption_ import Encrypt, Decrypt
 from uuid import uuid4
-from werkzeug import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import re
 
