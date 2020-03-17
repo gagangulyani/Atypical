@@ -10,9 +10,15 @@ def Hashtags(fileObj):
     finalKeywords = []
     data = {'data': fileObj, 'num_keywords': 20}
 
-    keywords = requests.post('https://api.everypixel.com/v1/keywords',
+    while True:
+        try:
+            keywords = requests.post('https://api.everypixel.com/v1/keywords',
                              files=data,
                              auth=(client_id, client_secret)).json()
+        except:
+            print('Connection to everypixel API failed.. Trying again..')
+        else:
+            break
 
     for keyword in keywords.get('keywords'):
         finalKeywords.append(keyword.get('keyword').replace('-',' ').lower().strip())

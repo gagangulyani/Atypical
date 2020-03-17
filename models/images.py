@@ -67,7 +67,7 @@ class Image(object):
     def GetImg(img_id):
         JsonImg = Image.GetByImgID(img_id)
         if JsonImg:
-            JsonImg.update({'created_at': Database.created_at(self._id)})
+            JsonImg.update({'created_at': Database.created_at(img_id)})
 
         return JsonImg
 

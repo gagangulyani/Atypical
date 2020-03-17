@@ -19,8 +19,11 @@ class Category(object):
         }
 
     def SaveCategory(self):
-        Database.insert(collection=Category.COLLECTION,
+        if not self.getCategory(self.category):
+            return Database.insert(collection=Category.COLLECTION,
                         data=self.toJson())
+        else:
+            return self.updateCategories([self.category])
 
     @staticmethod
     def updateCategory(cat):

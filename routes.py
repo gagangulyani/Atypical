@@ -573,7 +573,6 @@ def upload():
                 try:
                     img = Image.open(image)
                     img.verify()
-                    # flash('IMAGE IS VALID')
 
                 except (IOError, SyntaxError):
                     flash('Image is not Valid!')
@@ -588,20 +587,17 @@ def upload():
 
                     tags = Hashtags(fileObj)
                     imgCategories = []
-                    print(tags)
+                    # print(tags)
+                    for tag in tags:
+                        Category(category=tag).SaveCategory()
+                        
                     for cat in Category.getAllCategories(upload=True):
-                        print(cat)
                         for c in cat.split():
                             if c.lower() in tags:
                                 imgCategories.append(cat)
                                 print('category selected: ', cat)
 
-                    if not imgCategories:
-                        imgCategories.append('Random')
-
-                    # print('category selected: ', category)
                     img_id = str(uuid4().hex)[::-1]
-                    # print(Keywords(fileObj))
                     User.uploadImage(session.get('_cu'),
                                      categories=imgCategories,
                                      image=encodedImg,
