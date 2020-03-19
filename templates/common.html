@@ -110,7 +110,7 @@
       <a href="/category/Top Rated" >Top Rated</a>
       <a href="/category/Most Downloaded" >Most Downloaded</a>
       {% for category in categories %}
-      <a href='/category/{{category.get('category')}}'>{{category.get('category')}}</a>
+      <a href='/category/{{category.get('category')}}'>{{category.get('category') | title}}</a>
       {% endfor %}
   </div>
 {% endif %}

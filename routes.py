@@ -585,21 +585,14 @@ def upload():
                     fileObj = buffered.getvalue()
                     encodedImg = base64.b64encode(fileObj).decode()
 
-                    tags = Hashtags(fileObj)
-                    imgCategories = []
-                    # print(tags)
-                    for tag in tags:
-                        Category(category=tag).SaveCategory()
-                        
-                    for cat in Category.getAllCategories(upload=True):
-                        for c in cat.split():
-                            if c.lower() in tags:
-                                imgCategories.append(cat)
-                                print('category selected: ', cat)
-
+                    tags, api_data = Hashtags(fileObj)
+                    
+                    cats = [i.get('keyword').lower() for i in api_data['keywords'] if i.get('score') > 0.7]
+                    tags = [i.lower() for i in tags]
+                    
                     img_id = str(uuid4().hex)[::-1]
                     User.uploadImage(session.get('_cu'),
-                                     categories=imgCategories,
+                                     categories=cats,
                                      image=encodedImg,
                                      description=form.description.data,
                                      hashtags=tags,

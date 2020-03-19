@@ -23,7 +23,7 @@ def Hashtags(fileObj):
     for keyword in keywords.get('keywords'):
         finalKeywords.append(keyword.get('keyword').replace('-',' ').lower().strip())
 
-    return finalKeywords
+    return finalKeywords, keywords
 
 def filter(query):
     filtered_query = ""

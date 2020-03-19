@@ -33,10 +33,14 @@ class Category(object):
 
     @staticmethod
     def updateCategories(cats, inc = 1):
-        Database.updateMany(
-            collection = Category.COLLECTION,
-            query = {'category' : {'$in' : cats}}, 
-            update_query = {'$inc': {'number_of_images': inc}})
+        for c in cats:
+            if not Category.getCategory(c):
+                Category(c).SaveCategory()
+            else:
+                Database.updateMany(
+                    collection = Category.COLLECTION,
+                    query = {'category' : {'$in' : cats}}, 
+                    update_query = {'$inc': {'number_of_images': inc}})
 
     @staticmethod
     def getCategory(category):
@@ -48,7 +52,8 @@ class Category(object):
         if not upload:
             categories = Database.find_all(
             collection=Category.COLLECTION,
-             query={'number_of_images': {'$gt': 0}})
+            query={'number_of_images': {'$gt': 0}},
+            sortField='number_of_images')
 
         if upload:
             categories = Database.find_all(
