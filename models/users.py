@@ -336,8 +336,7 @@ class User(object):
 
     @staticmethod
     def getCategories(cat =None):
-        imgs = Image.GetImgCategory(cat = cat)
-        return imgs
+        return Image.GetImgCategory(cat = cat)
 
     @staticmethod
     def updateUserInfo(user, _id):

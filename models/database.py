@@ -56,11 +56,7 @@ class Database(object):
                     result = Database.DATABASE[collection].find({f'{SearchField}': {'$in': items}}).limit(limit_).skip(skip_)
 
             return result
-            
-        return Database.DATABASE[collection].find(query).limit(limit_).skip(skip_)
-
-        return result
-
+        
     @staticmethod
     def count(collection, query={}):
         return Database.DATABASE[collection].count_documents(query)

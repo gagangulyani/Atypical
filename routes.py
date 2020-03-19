@@ -341,7 +341,7 @@ def Categories(category=None):
         for cat in categories:
             image = cat.get('image')
             cat.update({'image': compressImage(image)})
-            # print(categories)
+            print(categories[0].get('category'))
         return render_template('category.html',
                                categories=categories)
 
@@ -586,8 +586,8 @@ def upload():
                     encodedImg = base64.b64encode(fileObj).decode()
 
                     tags, api_data = Hashtags(fileObj)
-                    
-                    cats = [i.get('keyword').lower() for i in api_data['keywords'] if i.get('score') > 0.7]
+                    min_score = api_data['keywords'][1]['score'] # second highest score
+                    cats = [i.get('keyword').lower() for i in api_data['keywords'] if i.get('score') >= min_score]
                     tags = [i.lower() for i in tags]
                     
                     img_id = str(uuid4().hex)[::-1]

@@ -35,7 +35,7 @@ class Category(object):
     def updateCategories(cats, inc = 1):
         for c in cats:
             if not Category.getCategory(c):
-                Category(c).SaveCategory()
+                Category(c, number_of_images=1).SaveCategory()
             else:
                 Database.updateMany(
                     collection = Category.COLLECTION,
@@ -50,16 +50,15 @@ class Category(object):
     @staticmethod
     def getAllCategories(upload=False):
         if not upload:
-            categories = Database.find_all(
+            return list(Database.find_all(
             collection=Category.COLLECTION,
             query={'number_of_images': {'$gt': 0}},
-            sortField='number_of_images')
+            sortField='number_of_images'))
 
         if upload:
             categories = Database.find_all(
             collection=Category.COLLECTION,query={})
             categories = [i.get('category') for i in categories]
-
         return categories
 
 

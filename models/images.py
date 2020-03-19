@@ -120,18 +120,17 @@ class Image(object):
 
         categories = Category.getAllCategories()
         finalCategories = []
-        if categories:
-            for category in categories:
-                img = Database.find(
-                    collection=Image.COLLECTION,
-                    query={
-                        'category': category.get('category')},
-                    sortField=[('upvotes', 1)])
+        for category in categories:
+            img = Database.find(
+                collection=Image.COLLECTION,
+                query={
+                    'categories': category.get('category')},
+                sortField='upvotes')
 
-                if img:
-                    category.update({'image': img.get('image')})
-                    finalCategories.append(category)
-        # print(finalCategories)
+            if img:
+                category.update({'image': img.get('image')})
+                finalCategories.append(category)
+        print(finalCategories)
         return finalCategories
 
     @staticmethod
