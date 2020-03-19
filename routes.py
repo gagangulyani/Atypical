@@ -343,7 +343,8 @@ def Categories(category=None):
             cat.update({'image': compressImage(image)})
             print(categories[0].get('category'))
         return render_template('category.html',
-                               categories=categories)
+                            categories=categories,
+                            enumerate=enumerate)
 
     if any(char in punctuation for char in category):
         flash('Invalid Category!')

@@ -1,35 +1,61 @@
 {% extends "common.html" %}
 {% block title %}
-    Categories: {{super()}}
+Categories: {{super()}}
 {% endblock %}
 
 {% block content %}
-<div class="pt-md-5 pt-0" id='categories' style='background-image: url("{{url_for('static',filename='images/112.jpg')}}");background-position: center; background-size: cover; background-repeat: no-repeat' >
+<div class="pt-md-5 pt-0" id='categories' style='background-color: black'>
 
-{% for message in get_flashed_messages() %}
-<div class="alert alert-dark">
-    <button type="button" class="close" data-dismiss="alert"> &times; </button> {{ message }} </div>
-{% endfor %}
-
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-dark">
+        <button type="button" class="close" data-dismiss="alert"> &times; </button> {{ message }} </div>
+    {% endfor %}
+    <h1 class="text-light mb-5 pt-4 px-2 text-uppercase text-center heading">Categories
+    </h1>
     {# {% if categories %} #}
-    <div class="col-md-12 content">
-        <div class="header d-flex justify-content-center">
-            <h1 class="display-4 mb-5 py-2 px-2 text-center" style='width:auto;color: black;font-size: 3em;'>Categories</h1>
-        </div>
-        <div class="masonry">
-            {% for category in categories %}
-            <a href='/category/{{category.get("category")}}'>
-                <div class="item">
-                    <img src="data:image/jpg;base64,{{category.get('image')}}" alt="{{category.get('category')}}" class="image" style="width:100%;">
-                    <div class="middle">
-                        <div class="text" style="font-size: 1.5em">{{category.get('category')}}</div>
-                    </div>
-                </div>
+    <div class="container pb-5">
+        <a href="/category/Top%20Rated" class="text-dark text-center">
+            <p class="random-color bg-light py-4 text-center border-light border px-5 my-2">Top Rated
+            </p>
+        </a>
+        <a href="/category/Most%20Downloaded" class="text-dark text-center">
+            <p class="random-color bg-light py-4 text-center border-light border px-5 my-2">Most Downloaded
+            </p>
+        </a>
+        <div class="row">
+            {% for i, category in enumerate(categories) %}
+            <a class="text-dark col-12 col-md-6 text-center mx-auto" href='/category/{{category.get("category")}}'>
+                <p class="m-2 p-5 random-color bg-light">{{category.get('category')| title}}</p>
             </a>
             {% endfor %}
         </div>
-    </div>
-    {# {% endif %} #}
-</div>
 
+    </div>
+</div>
+{# {% endif %} #}
+</div>
+{% endblock %}
+{% block styles %}
+{{super()}}
+
+<style>
+    .random-color {
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+        transition: all 400ms ease-in-out;
+        border-radius: 1rem;
+    }
+
+    .heading{
+        font-size: 4rem;
+    }
+    .random-color:hover {
+        color: white;
+        box-shadow: 0px 0px 20px red;
+        letter-spacing: 0.4rem;
+        background-color: black !important;
+        backdrop-filter: contrast(70%);
+    }
+</style>
 {% endblock %}
