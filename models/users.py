@@ -258,6 +258,7 @@ class User(object):
             if usr:
                 img.update(
                     {'name': usr.get('name'),
+                     'gender': usr.get('gender'),
                      'profilePicture': usr.get('profilePicture'),
                      'created_at': Database.created_at(img.get('_id'))})
         return img

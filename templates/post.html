@@ -29,7 +29,15 @@ Image By {{ImgData.get('name')|title}} - {{super()}}
                 <legend class="scheduler-border font-weight-bold">Image Taken By</legend>
                 <div class="mb-3">
                     <div class="align-content-center d-flex mt-2 justify-content-center proLink" onclick="ClickToGoTo('/profile/{{getUserData(ImgData.get('userID')).get('username')}}', this)">
+                        {% if ImgData.get('profilePicture') %}
                         <img src="data:image/jpeg;base64,{{ImgData.get('profilePicture')}}" class="mini-profile-picture" alt="">
+                        {% else %}
+                            {% if ImgData.get('gender') == 'M' %}
+                            <img src="/static/images/profile/profile_male.jpg" class="mini-profile-picture" alt="">
+                            {% else %}
+                            <img src="/static/images/profile/profile_female.jpg" class="mini-profile-picture" alt="">
+                            {% endif %}
+                        {% endif %}
                         <p class="user-name font-weight-bold mt-4 ml-lg-3">{{ImgData.get('name')|title}}</p>
                     </div>
                     <div class="vote text-center m-3">
