@@ -124,13 +124,11 @@ class Image(object):
             img = Database.find(
                 collection=Image.COLLECTION,
                 query={
-                    'categories': category.get('category')},
-                sortField='upvotes')
+                    'categories': category.get('category')})
 
             if img:
                 category.update({'image': img.get('image')})
                 finalCategories.append(category)
-        print(finalCategories)
         return finalCategories
 
     @staticmethod
