@@ -4,3 +4,4 @@ include/
 lib/
 *.pyc
 models/config_api.json
+temp
