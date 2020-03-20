@@ -255,14 +255,15 @@ def displayImages():
                                 usr.update({
                                     'profilePicture': url_for('static',
                                                               filename='\
-/images/profile/profile_male.jpg')
+images/profile/profile_male.jpg')
                                 })
                             else:
                                 usr.update({
                                     'profilePicture': url_for('static',
                                                               filename='\
-/images/profile/profile_female.jpg')
+images/profile/profile_female.jpg')
                                 })
+                                
                         # print(img.get('img_id'))
                         final_imgs.append({
                             'img_id': img.get('img_id'),
@@ -273,6 +274,7 @@ def displayImages():
                             'isProfile': isProfile,
                             'created_at': Database.created_at(img.get('_id')),
                             'hasProfilePicture': hasProfilePicture})
+                        usr = None
                     del img
                 del imgs
                 # print(final_imgs[0]['profilePicture'])
