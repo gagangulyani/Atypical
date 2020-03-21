@@ -9,7 +9,7 @@ from urllib.parse import (unquote, unquote_plus)
 from models.users import User
 from models.database import Database
 from models.categories import Category
-from models.search import Hashtags
+from models.search import Hashtags, words
 from models.images import Image as ImageC
 from uuid import uuid4
 from string import punctuation
@@ -206,16 +206,19 @@ sabled for this Post!')
 
 
 @app.route("/images", methods=['POST'])
+@app.route("/images/search", methods=['POST'])
 def displayImages():
     if request.method != 'POST':
         return redirect('/', 302)
     else:
         data = request.json
         print(data)
-        if data.get('skip') is not None:
+        if not data.get('skip') is None:
             skip = data.get('skip', 0)
             cat = data.get('category')
             username = data.get('username')
+            search_query = data.get('search')
+            # print(search_query)
             usr = {}
             isProfile = False
             if 'int' in str(type(skip)) and skip < 10000:
@@ -232,7 +235,22 @@ def displayImages():
                             skip_=skip, limit_=10, sortField='_id')
 
                         isProfile = True
-
+                        
+                elif search_query:
+                    query = words(search_query)
+                    squery=[]
+                    for q in range(len(query)):
+                        squery.append(
+                            {'tags': {'$all': query[:q+1]}}
+                        )
+                    imgs = list(ImageC.GetAllImages(
+                        query = {
+                            "$or": squery
+                        },
+                        skip_=skip,
+                        limit_=10
+                    ))
+                    print(f'images for search : {squery}')
                 else:
                     imgs = ImageC.GetAllImages(skip_=skip, limit_=10)
 
@@ -366,7 +384,12 @@ def Categories(category=None):
     else:
         flash('Category not Found!')
         return redirect('/categories', 302)
+    
 
+@app.route('/search')
+def imageSearch():
+    query = " ".join(words(request.args.get('q')))
+    return render_template('search.html', query=query)
 
 @app.route("/about")
 def about():

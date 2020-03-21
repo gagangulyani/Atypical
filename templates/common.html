@@ -95,8 +95,8 @@
         <div class="collapse navbar-collapse" id="search_">
             <ul class="navbar-nav d-flex mb-3 mb-lg-4">
                 <li id='formSearch'>
-                  <form class="form-inline nav-link" action='/search'>
-                      <input class="form-control" type="search" placeholder="Search Something" aria-label="Search" name="q"><button class="btn btn-outline-dark my-2 my-sm-0 ml-lg-1" type="submit">Search</button>
+                  <form method="GET" class="form-inline nav-link" action='/search'>
+                      <input name = "q" class="form-control" type="search" placeholder="Search Something" aria-label="Search" name="q"><button class="btn btn-outline-dark my-2 my-sm-0 ml-lg-1" type="submit">Search</button>
                   </form>
                 </li>
             </ul>

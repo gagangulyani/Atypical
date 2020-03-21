@@ -8,10 +8,10 @@ Stock Image Site
     <div class="content">
         <div class='mt-0'>
             <img class="img-fluid bounceIn animated" src="{{url_for('static',filename='images/Logo.svg')}}" alt="Atypical">
-            <form class="form-inline nav-link fadeInUpBig animated" id='searchLanding'>
+            <form action = '/search' method="GET" class="form-inline nav-link fadeInUpBig animated" id='searchLanding'>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12 ">
-                        <input type="text" class="form-control input-lg" placeholder="Search Something" name="search" />
+                        <input type="text" class="form-control input-lg" placeholder="Search Something" name="q" />
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="submit">
                                 <i class="fa fa-search"></i>

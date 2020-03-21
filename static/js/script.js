@@ -215,10 +215,18 @@ function loadImages(param) {
     else
         var url_ = '/images';
 
+    if (param.search != undefined){
+        var search = param.search;
+    }
+    else{
+        var search = "";
+    }
+
     obj = {
         'skip': skip,
         'category': cat,
-        'username': username
+        'username': username,
+        'search': search
     }
 //    console.log(obj);
     $('#loadingImgs').toggleClass('d-none');

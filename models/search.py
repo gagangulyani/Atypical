@@ -1,4 +1,5 @@
 from models.database import Database
+from string import punctuation
 from json import load
 import requests
 
@@ -25,6 +26,12 @@ def Hashtags(fileObj):
 
     return finalKeywords, keywords
 
-def filter(query):
-    filtered_query = ""
-    return filtered_query
+def words(query):
+    query = [word.lower() for word in query.split() if word.strip()][:20]
+    with open("models/stop_words.txt") as f:
+        stop_words = [word.strip() for word in f.readlines()]
+    final_query = []
+    for word in query:
+        if not word in stop_words:
+            final_query.append(word)
+    return final_query
