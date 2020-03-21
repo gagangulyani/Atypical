@@ -610,7 +610,14 @@ def upload():
                              optimize=True, quality=75)
                     fileObj = buffered.getvalue()
                     encodedImg = base64.b64encode(fileObj).decode()
-
+                    
+                    # compressing image for API
+                    size = img.size
+                    img.resize((size[0]//10, size[1]//10), Image.ANTIALIAS)
+                    img.save(buffered, format="JPEG",
+                             optimize=True, quality=75)
+                    fileObj = buffered.getvalue()
+                    
                     tags, api_data = Hashtags(fileObj)
                     min_score = api_data['keywords'][9]['score'] # 10th highest score
                     cats = [i.get('keyword').lower() for i in api_data['keywords'] if i.get('score') >= min_score]
@@ -623,6 +630,7 @@ def upload():
                                      description=form.description.data,
                                      hashtags=tags,
                                      img_id=img_id)
+                    del img
                     del fileObj
                     flash('Image Uploaded Successfully!')
                     return redirect(f'/post/{img_id}', 302)
