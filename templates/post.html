@@ -17,7 +17,7 @@ Image By {{ImgData.get('name')|title}} - {{super()}}
                 <h3 class="font-weight-bold d-inline-block">Categories</h3>
                 <div class="post-description">
                     {% for category in ImgData.get('categories') %}
-                        <a href="/category/{{category}}"><p>{{category}}</p></a>
+                        <a href="/category/{{category}}"><i class="p-1 m-1">{{category}}</i></a>
                     {% endfor %}
                 </div>
                 <hr>

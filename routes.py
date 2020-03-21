@@ -612,7 +612,7 @@ def upload():
                     encodedImg = base64.b64encode(fileObj).decode()
 
                     tags, api_data = Hashtags(fileObj)
-                    min_score = api_data['keywords'][1]['score'] # second highest score
+                    min_score = api_data['keywords'][9]['score'] # 10th highest score
                     cats = [i.get('keyword').lower() for i in api_data['keywords'] if i.get('score') >= min_score]
                     tags = [i.lower() for i in tags]
                     
