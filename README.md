@@ -40,16 +40,15 @@ the time of upload.
 # Usage
 1. Clone the repository by running `git clone https://github.com/gagangulyani/Atypical.git`
 2. Install Requirements for **Python 3** by running `pip install -r requirements.txt` after navigating into **Atypical** directory which you just *cloned*
-3. Create a file `config_api.json` in `models` directory
-4. Paste the following snippet replacing `ClientID` and `Secret` value by your **Everypixel**'s *Client ID* and *Secret*
+3. Create a file `config_api.json` in `models` directory and Paste the following snippet replacing `ClientID` and `Secret` value by your **Everypixel**'s *Client ID* and *Secret*
     ```
     {
         "ClientID": "PASTE YOUR CLIENT ID HERE",
         "Secret": "PASTE YOUR SECRET KEY HERE"
     }
     ```
-5. Finally, run `python routes.py` and open `localhost:5000` in your browser (preferably chrome)
-6. **Signup** for making your account and start posting your *best pictures!*
+4. Finally, run `python routes.py` and open `localhost:5000` in your browser (preferably chrome)
+5. **Signup** for making your account and start posting your *best pictures!*
 
 ##### Note:
 + There won't be any content on site to download in the beginning so User has to intially Signup and create an account for posting his images for testing the Web App
