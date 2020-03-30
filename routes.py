@@ -15,7 +15,8 @@ from uuid import uuid4
 from string import punctuation
 from datetime import datetime
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageFile
+from os.path import exists
 import base64
 import re
 
@@ -31,7 +32,7 @@ def inject_stage_and_region():
 
 
 app.config['SECRET_KEY'] = '{}'.format(uuid4().hex)
-
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 @app.before_request
 def make_session_permanent():
@@ -72,7 +73,9 @@ def compressImage(base64str, lossless=False, size=(720, 720), quality=35):
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    if exists('models/config_api.json'):
+        return render_template('index.html')
+    return render_template('missing_config.html')
 
 
 @app.route("/profile/<string:username>")

@@ -1,0 +1,16 @@
+{% extends "common.html" %}
+
+{% block content %}
+<div class="container p-5 text-center">
+    <h1 class="text-danger">ERROR:</h1>
+    <h3><b>config_api.json</b> is mising!</h3>
+    <p class="text-danger"><b>Path to Missing file:</b> models/config_api.json</p>
+    <p class="m-2 font-weight-bold">
+        This file is required for performing core functionalities of the site like 
+        Uploading, Searching and Categorizing Images..
+    </p>
+    <a href='https://github.com/gagangulyani/Atypical' class="font-weight-bold">
+        Click here to Go to official Documentation of Atypical to fix this issue
+    </a>
+</div>
+{% endblock %}
