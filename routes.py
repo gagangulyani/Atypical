@@ -16,6 +16,7 @@ from string import punctuation
 from datetime import datetime
 from io import BytesIO
 from PIL import Image, ImageFile
+from os import remove
 from os.path import exists
 import base64
 import re
@@ -64,6 +65,7 @@ def compressImage(base64str, lossless=False, size=(720, 720), quality=35):
     image.save(buffered, format="JPEG", optimize=True, quality=quality)
     encodedImg = base64.b64encode(buffered.getvalue()).decode()
     f.close()
+    remove('temp')
     del img_data
     del f
     del buffered
@@ -488,7 +490,7 @@ def updateProfilePicture():
                 del buffered
                 del image
                 del encodedImg
-
+                remove('temp')
                 if result:
                     return jsonify({'success': 'Profile Picture Updated!'})
                 else:
