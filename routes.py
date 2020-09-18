@@ -371,7 +371,7 @@ def Categories(category=None):
                             categories=categories,
                             enumerate=enumerate)
 
-    if any(char in punctuation for char in category):
+    if any(char in punctuation.replace('-', '') for char in category):
         flash('Invalid Category!')
         print(category)
         return redirect('/categories', 302)
